@@ -21,11 +21,12 @@ namespace Centro_Loca_Mais
         private void tbnAlterar_Click(object sender, EventArgs e)
         {
             Database database = new Database();
+            string comando = "UPDATE carro SET valor_locacao = ?valor_locacao WHERE placa = ?placa;";
 
-
-            database.mysqlComando("UPDATE carro SET valor_locacao = ?valor_locacao WHERE placa = ?placa;");
-            database.addParametro("?placa", txtPlaca.Text)
-            .addParametro("?valor_locacao", txtValorLocacao.Text);
+            MySqlCommand comand = database.mysqlComando(comando);
+            database.addParametro("?placa", txtPlaca.Text);
+                database.addParametro("?valor_locacao", double.Parse(txtValorLocacao.Text));
+                database.execultaComando(comando);
 
 
                 lblInformacao.ForeColor = Color.Green;
@@ -34,8 +35,9 @@ namespace Centro_Loca_Mais
                 txtPlaca.Text = "";
                 txtValorLocacao.Text = "";
                 txtPlaca.Focus();
-         
-              txtPlaca.Text = "";
+
+          
+                txtPlaca.Text = "";
                 txtValorLocacao.Text = "";
                 txtPlaca.Focus();
                 lblInformacao.Text = "Erro ocorrido na alteração de valor\n"
